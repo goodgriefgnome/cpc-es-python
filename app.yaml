@@ -8,6 +8,13 @@ handlers:
 # Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
 - url: /_ah/spi/.*
   script: api_server.APPLICATION
+- url: /createPptx
+  script: redirect.to_java
+- url: /wisPrep/.*
+  script: redirect.to_wisprep
+- url: /admin/properties/.*
+  script: properties.app
+  login: admin
 
 libraries:
 - name: pycrypto

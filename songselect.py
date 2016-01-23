@@ -54,14 +54,14 @@ class Connection(object):
     def _GetLines(self, element):
         return [t.strip() for t in element.itertext() if t.strip()]
 
-    def _GetLyricsLink(self, songid):
-        overview = self._Fetch('/songs/{}'.format(songid))
+    def _GetLyricsLink(self, overview):
         links = [e.attrib['href'] for e in overview.findall('.//a[@href]')]
         return [l for l in links if l.endswith('/viewlyrics')][0]
 
     def GetSong(self, songid):
-        lyrics = self._Fetch(self._GetLyricsLink(songid))
-        title = lyrics.find('.//title').text
+        overview = self._Fetch('/songs/{}'.format(songid))
+        lyrics = self._Fetch(self._GetLyricsLink(overview))
+        title = overview.find('.//title').text
         section = lyrics.find('.//*[@class="lyrics"]')
 
         copyright_lines = []
